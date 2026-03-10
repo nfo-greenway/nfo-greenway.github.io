@@ -136,6 +136,65 @@
   .safety-card p { font-size: 0.9em; color: var(--gray); margin: 0; }
   .safety-card .citation { font-size: 0.72em; color: #999; margin-top: 6px; font-style: italic; }
 
+  /* Vote Section */
+  .vote-section {
+    background: linear-gradient(135deg, #FFF8E1 0%, #FFF3E0 100%);
+    text-align: center; padding: 60px 20px;
+  }
+  .vote-section h2 { color: var(--earth); }
+  .vote-section > p { max-width: 550px; margin: 0 auto 30px; color: var(--gray); }
+  .vote-form {
+    max-width: 480px; margin: 0 auto; background: white;
+    border-radius: 16px; padding: 32px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    text-align: left;
+  }
+  .vote-form label { display: block; font-size: 0.85em; font-weight: 600; color: var(--text); margin-bottom: 4px; margin-top: 14px; }
+  .vote-form label .optional { font-weight: 400; color: #999; }
+  .vote-form input[type="text"] {
+    width: 100%; padding: 10px 14px; border: 1.5px solid #ddd; border-radius: 8px;
+    font-size: 0.95em; font-family: inherit; transition: border-color 0.2s;
+  }
+  .vote-form input[type="text"]:focus { outline: none; border-color: var(--green-light); }
+  .vote-question { font-weight: 600; color: var(--text); margin: 24px 0 14px; font-size: 0.95em; text-align: center; }
+  .vote-options { display: flex; gap: 12px; justify-content: center; margin-bottom: 24px; }
+  .vote-option {
+    flex: 1; padding: 18px 12px; border: 2px solid #e0e0e0; border-radius: 12px;
+    text-align: center; cursor: pointer; transition: all 0.2s; background: #fafafa; user-select: none;
+  }
+  .vote-option:hover { border-color: var(--green-light); background: var(--green-pale); }
+  .vote-option.selected { border-color: var(--green); background: var(--green-pale); box-shadow: 0 0 0 2px var(--green); }
+  .vote-option .vote-icon { font-size: 2em; display: block; margin-bottom: 6px; }
+  .vote-option .vote-label { font-weight: 600; font-size: 0.9em; }
+  .vote-btn {
+    width: 100%; padding: 13px; border: none; border-radius: 50px;
+    background: var(--green); color: white; font-size: 1em; font-weight: 600;
+    cursor: pointer; transition: background 0.2s; margin-top: 10px;
+  }
+  .vote-btn:hover { background: #1B5E20; }
+  .vote-btn:disabled { background: #aaa; cursor: not-allowed; }
+  .vote-success { text-align: center; padding: 30px 0; max-width: 480px; margin: 0 auto; }
+  .vote-success .check { font-size: 3em; margin-bottom: 10px; }
+  .vote-success h3 { color: var(--green); margin-bottom: 8px; }
+  .vote-success p { color: var(--gray); font-size: 0.9em; }
+  .vote-already { text-align: center; padding: 20px; max-width: 480px; margin: 0 auto;
+    background: white; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+  .vote-already p { color: var(--gray); font-size: 0.95em; }
+
+  /* Spread the Word Section */
+  .spread-section {
+    background: var(--green-pale); text-align: center; padding: 50px 20px;
+    border-top: 1px solid #C8E6C9;
+  }
+  .spread-section h2 { color: var(--green); margin-bottom: 12px; }
+  .spread-section p { max-width: 500px; margin: 0 auto 24px; color: var(--gray); }
+  .spread-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--green); color: white; padding: 14px 32px;
+    border-radius: 50px; text-decoration: none; font-weight: 600; font-size: 1.05em;
+    transition: background 0.2s; border: none; cursor: pointer;
+  }
+  .spread-btn:hover { background: #1B5E20; }
+
   /* Footer */
   footer { background: var(--text); color: rgba(255,255,255,0.7); text-align: center; padding: 30px 20px; font-size: 0.85em; }
   footer a { color: rgba(255,255,255,0.9); }
@@ -202,6 +261,14 @@
     .safety-card h3 { font-size: 0.92em; }
     .safety-card p { font-size: 0.84em; }
     .safety-card .citation { font-size: 0.68em; }
+    .vote-section { padding: 40px 16px; }
+    .vote-form { padding: 24px 18px; }
+    .vote-options { flex-direction: column; gap: 10px; }
+    .vote-option { padding: 14px; }
+    .vote-option .vote-icon { font-size: 1.6em; display: inline; margin-right: 8px; margin-bottom: 0; }
+    .vote-option .vote-label { font-size: 0.85em; }
+    .spread-section { padding: 36px 16px; }
+    .spread-btn { padding: 12px 24px; font-size: 0.95em; }
     .cta-section { padding: 40px 16px; }
     .cta-section h2 { font-size: 1.3em; }
     .cta-section p { font-size: 0.9em; }
@@ -428,6 +495,94 @@
   </div>
 </section>
 
+<!-- COMMUNITY VOTE -->
+<section class="vote-section">
+  <h2>
+    <span class="en">🗳️ Community Vote</span>
+    <span class="es">🗳️ Votación Comunitaria</span>
+    <span class="zh">🗳️ 社区投票</span>
+  </h2>
+  <p>
+    <span class="en">Your voice matters. Let us know how you feel about the Corridor Park project. One vote per household.</span>
+    <span class="es">Su voz importa. Díganos qué opina del proyecto Parque del Corredor. Un voto por hogar.</span>
+    <span class="zh">您的声音很重要。请告诉我们您对走廊公园项目的看法。每户一票。</span>
+  </p>
+
+  <div class="vote-form" id="voteFormContainer">
+    <form id="voteForm" onsubmit="return submitVote(event)">
+      <label>
+        <span class="en">Name <span class="optional">(optional)</span></span>
+        <span class="es">Nombre <span class="optional">(opcional)</span></span>
+        <span class="zh">姓名 <span class="optional">（选填）</span></span>
+      </label>
+      <input type="text" name="voter_name">
+
+      <label>
+        <span class="en">Street Address *</span>
+        <span class="es">Dirección *</span>
+        <span class="zh">街道地址 *</span>
+      </label>
+      <input type="text" name="voter_address" required>
+
+      <p class="vote-question">
+        <span class="en">How do you feel about the Corridor Park project?</span>
+        <span class="es">¿Qué opina del proyecto Parque del Corredor?</span>
+        <span class="zh">您对走廊公园项目有何看法？</span>
+      </p>
+
+      <div class="vote-options">
+        <div class="vote-option" onclick="selectVote(this,'in_favor')">
+          <span class="vote-icon">👍</span>
+          <span class="vote-label en">In Favor</span>
+          <span class="vote-label es">A Favor</span>
+          <span class="vote-label zh">赞成</span>
+        </div>
+        <div class="vote-option" onclick="selectVote(this,'against')">
+          <span class="vote-icon">👎</span>
+          <span class="vote-label en">Against</span>
+          <span class="vote-label es">En Contra</span>
+          <span class="vote-label zh">反对</span>
+        </div>
+        <div class="vote-option" onclick="selectVote(this,'not_sure')">
+          <span class="vote-icon">🤔</span>
+          <span class="vote-label en">Not Sure</span>
+          <span class="vote-label es">No Sé</span>
+          <span class="vote-label zh">不确定</span>
+        </div>
+      </div>
+
+      <input type="hidden" name="vote" id="voteChoice">
+      <button type="submit" class="vote-btn" id="voteBtn">
+        <span class="en">Submit My Vote</span>
+        <span class="es">Enviar Mi Voto</span>
+        <span class="zh">提交投票</span>
+      </button>
+    </form>
+  </div>
+
+  <div id="voteSuccess" class="vote-success" style="display:none;">
+    <div class="check">🗳️</div>
+    <h3>
+      <span class="en">Vote Recorded!</span>
+      <span class="es">¡Voto Registrado!</span>
+      <span class="zh">投票已记录！</span>
+    </h3>
+    <p>
+      <span class="en">Thank you for making your voice heard. Your vote helps shape our neighborhood's future.</span>
+      <span class="es">Gracias por hacer oír su voz. Su voto ayuda a moldear el futuro de nuestro vecindario.</span>
+      <span class="zh">感谢您发出自己的声音。您的投票有助于塑造社区的未来。</span>
+    </p>
+  </div>
+
+  <div id="voteAlready" class="vote-already" style="display:none;">
+    <p>
+      <span class="en">🗳️ You've already submitted your vote from this device. Thank you for participating!</span>
+      <span class="es">🗳️ Ya ha enviado su voto desde este dispositivo. ¡Gracias por participar!</span>
+      <span class="zh">🗳️ 您已从此设备提交了投票。感谢参与！</span>
+    </p>
+  </div>
+</section>
+
 <!-- CTA -->
 <section class="cta-section">
   <h2>
@@ -450,6 +605,25 @@
     <span class="es">¡O venga a hablar con nosotros en la próxima Charla en la Acera!</span>
     <span class="zh">或者来参加下一次人行道聊天活动！</span>
   </p>
+</section>
+
+<!-- GET THE WORD OUT -->
+<section class="spread-section">
+  <h2>
+    <span class="en">📣 Help Spread the Word</span>
+    <span class="es">📣 Ayude a Correr la Voz</span>
+    <span class="zh">📣 帮助传播信息</span>
+  </h2>
+  <p>
+    <span class="en">Download our community flier and share it with neighbors, local businesses, and friends.</span>
+    <span class="es">Descargue nuestro folleto comunitario y compártalo con vecinos, negocios locales y amigos.</span>
+    <span class="zh">下载我们的社区传单，分享给邻居、当地商家和朋友。</span>
+  </p>
+  <a href="Corridor_Park_Flier.pdf" class="spread-btn" download>
+    <span class="en">📄 Download Flier (PDF)</span>
+    <span class="es">📄 Descargar Folleto (PDF)</span>
+    <span class="zh">📄 下载传单 (PDF)</span>
+  </a>
 </section>
 
 <!-- Feedback Modal -->
@@ -516,6 +690,81 @@
 </div>
 
 <script>
+/* ---- Vote backend URL (paste your Google Apps Script URL here) ---- */
+var VOTE_SCRIPT_URL = '';
+
+var selectedVote = null;
+
+function selectVote(el, value) {
+  document.querySelectorAll('.vote-option').forEach(function(o){ o.classList.remove('selected'); });
+  el.classList.add('selected');
+  selectedVote = value;
+  document.getElementById('voteChoice').value = value;
+}
+
+function submitVote(e) {
+  e.preventDefault();
+  if (!selectedVote) { alert('Please select a vote option'); return false; }
+  var form = document.getElementById('voteForm');
+  var btn = document.getElementById('voteBtn');
+  var vName = form.voter_name.value;
+  var vAddr = form.voter_address.value.trim();
+  if (!vAddr) { alert('Please enter your street address'); return false; }
+
+  btn.disabled = true;
+  btn.innerHTML = '<span class="en">Submitting\u2026</span><span class="es">Enviando\u2026</span><span class="zh">\u63d0\u4ea4\u4e2d\u2026</span>';
+
+  var voteLabels = { in_favor:'IN FAVOR \u2705', against:'AGAINST \u274c', not_sure:'NOT SURE \ud83e\udd14' };
+  var d = [104,97,115,115,97,110,46,108,97,115,104,64,103,109,97,105,108,46,99,111,109];
+  var dest = d.map(function(c){return String.fromCharCode(c)}).join('');
+
+  /* If Apps Script URL is set, use it (aggregation + bar-chart email) */
+  if (VOTE_SCRIPT_URL) {
+    fetch(VOTE_SCRIPT_URL, {
+      method:'POST', mode:'no-cors',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ name:vName, address:vAddr, vote:selectedVote })
+    }).then(function(){ voteOk(); }).catch(function(){ voteFallback(dest, vName, vAddr, voteLabels); });
+  } else {
+    /* Fallback: formsubmit.co email only */
+    voteFallback(dest, vName, vAddr, voteLabels);
+  }
+  return false;
+}
+
+function voteFallback(dest, vName, vAddr, voteLabels) {
+  var data = new FormData();
+  data.append('Name', vName || '(not provided)');
+  data.append('Address', vAddr);
+  data.append('Vote', voteLabels[selectedVote]);
+  data.append('_subject', '\ud83d\uddf3\ufe0f Corridor Park Vote: ' + voteLabels[selectedVote] + ' \u2014 ' + vAddr);
+  data.append('_captcha','false');
+  data.append('_template','table');
+  fetch('https://formsubmit.co/ajax/' + dest, {
+    method:'POST', body:data, headers:{'Accept':'application/json'}
+  }).then(function(r){ return r.json(); })
+    .then(function(){ voteOk(); })
+    .catch(function(){
+      document.getElementById('voteBtn').disabled = false;
+      document.getElementById('voteBtn').innerHTML = '<span class="en">Submit My Vote</span><span class="es">Enviar Mi Voto</span><span class="zh">\u63d0\u4ea4\u6295\u7968</span>';
+      alert('Something went wrong. Please try again.');
+    });
+}
+
+function voteOk() {
+  document.getElementById('voteFormContainer').style.display = 'none';
+  document.getElementById('voteSuccess').style.display = 'block';
+  localStorage.setItem('corridor_park_voted','true');
+}
+
+/* Check if already voted from this browser */
+if (localStorage.getItem('corridor_park_voted')) {
+  var vc = document.getElementById('voteFormContainer');
+  if (vc) vc.style.display = 'none';
+  var va = document.getElementById('voteAlready');
+  if (va) va.style.display = 'block';
+}
+
 function setLang(lang) {
   document.body.classList.remove('spanish', 'chinese');
   if (lang === 'es') document.body.classList.add('spanish');
