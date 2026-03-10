@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Corridor Park — North Fair Oaks Community Green Space</title>
+<style>
+  :root {
+    --green: #2E7D32;
+    --green-light: #4CAF50;
+    --green-pale: #E8F5E9;
+    --sand: #FFF8E1;
+    --earth: #5D4037;
+    --text: #263238;
+    --gray: #546E7A;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; color: var(--text); line-height: 1.6; }
+
+  /* Hero */
+  .hero {
+    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('../park_render_photorealistic.png');
+    background-size: cover;
+    background-position: center;
+    color: white; text-align: center; padding: 100px 20px 80px;
+    position: relative; overflow: hidden;
+  }
+  .hero h1 { font-size: 3.2em; font-weight: 700; margin-bottom: 15px; position: relative; letter-spacing: -0.5px; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+  .hero .subtitle { font-size: 1.3em; opacity: 0.95; max-width: 650px; margin: 0 auto 35px; position: relative; text-shadow: 0 1px 5px rgba(0,0,0,0.3); }
+  .hero .badge {
+    display: inline-block; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 50px; padding: 10px 28px; font-size: 0.95em; position: relative; backdrop-filter: blur(8px);
+  }
+
+  /* Sections */
+  section { padding: 60px 20px; max-width: 800px; margin: 0 auto; }
+  h2 { font-size: 1.8em; color: var(--green); margin-bottom: 20px; }
+  h3 { font-size: 1.2em; color: var(--earth); margin: 20px 0 8px; }
+
+  /* Map */
+  .map-section { background: white; padding: 50px 20px; text-align: center; }
+  .map-section img { max-width: 900px; width: 100%; border-radius: 12px; box-shadow: 0 4px 25px rgba(0,0,0,0.12); }
+  .map-caption { font-size: 0.95em; color: var(--gray); margin-top: 15px; font-weight: 500; }
+
+  /* Vision cards */
+  .vision-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; margin: 30px 0; }
+  .vision-card {
+    background: white; border: 1px solid #e0e0e0; border-radius: 12px; padding: 28px;
+    text-align: center; transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .vision-card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+  .vision-card .icon { font-size: 2.2em; margin-bottom: 10px; }
+  .vision-card h3 { margin: 0 0 8px; color: var(--green); }
+  .vision-card p { font-size: 0.9em; color: var(--gray); }
+
+  /* FAQ */
+  .faq-section { background: #FAFAFA; }
+  .faq-item { background: white; border-radius: 10px; padding: 24px; margin-bottom: 16px; border-left: 4px solid var(--green-light); }
+  .faq-item h3 { color: var(--text); margin: 0 0 10px; font-size: 1.1em; text-transform: capitalize; }
+  .faq-item p { color: var(--gray); margin: 0; font-size: 0.95em; }
+  .faq-item .citation { font-size: 0.72em; color: #999; margin-top: 8px; font-style: italic; }
+
+  /* Benefits strip */
+  .benefits-strip {
+    background: var(--green-pale); border-top: 1px solid #C8E6C9; border-bottom: 1px solid #C8E6C9;
+    display: flex; justify-content: center; align-items: center; gap: 0; padding: 28px 20px; flex-wrap: wrap;
+  }
+  .benefit-item {
+    text-align: center; padding: 0 32px; color: var(--green); font-size: 1em; font-weight: 500;
+    letter-spacing: 0.02em; line-height: 1.4;
+  }
+  .benefit-item:not(:last-child) { border-right: 1.5px solid #A5D6A7; }
+  @media (max-width: 600px) {
+    .benefit-item { border-right: none !important; padding: 8px 20px; }
+  }
+
+  /* CTA */
+  .cta-section { background: var(--sand); text-align: center; padding: 60px 20px; }
+  .cta-section h2 { color: var(--earth); }
+  .cta-section p { max-width: 550px; margin: 0 auto 24px; color: var(--gray); }
+  .btn {
+    display: inline-block; background: var(--green); color: white; padding: 14px 36px;
+    border-radius: 50px; text-decoration: none; font-weight: 600; font-size: 1.05em;
+    transition: background 0.2s;
+  }
+  .btn:hover { background: #1B5E20; }
+
+  /* Safety */
+  .safety-section { background: white; }
+  .safety-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+  .safety-card { padding: 20px; background: var(--green-pale); border-radius: 10px; }
+  .safety-card h3 { color: var(--green); margin: 0 0 6px; font-size: 1em; }
+  .safety-card p { font-size: 0.9em; color: var(--gray); margin: 0; }
+  .safety-card .citation { font-size: 0.72em; color: #999; margin-top: 6px; font-style: italic; }
+
+  /* Footer */
+  footer { background: var(--text); color: rgba(255,255,255,0.7); text-align: center; padding: 30px 20px; font-size: 0.85em; }
+  footer a { color: rgba(255,255,255,0.9); }
+
+  /* Spanish toggle */
+  .lang-toggle {
+    position: fixed; top: 16px; right: 16px; z-index: 100; background: white; border: 2px solid var(--green);
+    border-radius: 50px; padding: 6px 16px; cursor: pointer; font-weight: 600; color: var(--green);
+    font-size: 0.85em; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  .lang-toggle:hover { background: var(--green); color: white; }
+
+  .es { display: none; }
+  body.spanish .en { display: none; }
+  body.spanish .es { display: block; }
+  body.spanish .es-inline { display: inline; }
+  body.spanish .en-inline { display: none; }
+
+  @media (max-width: 600px) {
+    .hero h1 { font-size: 2.2em; }
+    .hero .subtitle { font-size: 1.1em; }
+    .safety-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<button class="lang-toggle" onclick="document.body.classList.toggle('spanish'); this.textContent = document.body.classList.contains('spanish') ? 'English' : 'Español';">Español</button>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>
+    <span class="en">Corridor Park</span>
+    <span class="es">Parque del Corredor</span>
+  </h1>
+  <p class="subtitle">
+    <span class="en">A community-led green space for North Fair Oaks.</span>
+    <span class="es">Un espacio verde liderado por la comunidad para North Fair Oaks.</span>
+  </p>
+  <span class="badge">
+    <span class="en">Community Pilot Project — SFPUC Right-of-Way</span>
+    <span class="es">Proyecto Piloto Comunitario — Derecho de paso de SFPUC</span>
+  </span>
+</div>
+
+<!-- BENEFITS STRIP -->
+<div class="benefits-strip">
+  <div class="benefit-item">
+    <span class="en">Increased neighborhood desirability</span>
+    <span class="es">Mayor atractivo del vecindario</span>
+  </div>
+  <div class="benefit-item">
+    <span class="en">A cleaner, safer block</span>
+    <span class="es">Una cuadra más limpia y segura</span>
+  </div>
+  <div class="benefit-item">
+    <span class="en">Community & local business funded</span>
+    <span class="es">Financiado por la comunidad y negocios locales</span>
+  </div>
+</div>
+
+<!-- RENDER -->
+<div class="map-section">
+  <img src="park_render.png" alt="Conceptual site plan" />
+  <p class="map-caption">
+    <span class="en">Conceptual site plan.</span>
+    <span class="es">Plano conceptual.</span>
+  </p>
+</div>
+
+<!-- VISION -->
+<section>
+  <h2>
+    <span class="en">The Vision</span>
+    <span class="es">La Visión</span>
+  </h2>
+  <p class="en">We are proposing a Community-Led Pilot project to San Mateo County and SFPUC to beautify the corridor behind and near our homes. This is about creating a safer, cleaner, and more welcoming North Fair Oaks through landscaping, native plants, and community stewardship.</p>
+  <p class="es">Proponemos un Proyecto Piloto Comunitario al Condado de San Mateo y a la SFPUC para embellecer el corredor detrás y cerca de nuestras casas. Se trata de crear un North Fair Oaks más seguro, limpio y acogedor a través del paisajismo, plantas nativas y la participación comunitaria.</p>
+
+  <div class="vision-grid">
+    <div class="vision-card">
+      <div class="icon">🌿</div>
+      <h3 class="en">Native Plants & Hedges</h3><h3 class="es">Plantas Nativas y Setos</h3>
+      <p class="en">Drought-tolerant California native gardens that attract pollinators and require minimal water. Includes dense privacy hedges along property lines for noise buffering and visual privacy.</p>
+      <p class="es">Jardines nativos de California tolerantes a la sequía que atraen polinizadores y requieren poca agua. Incluye setos de privacidad densos a lo largo de las propiedades para amortiguar ruido y dar privacidad visual.</p>
+    </div>
+    <div class="vision-card">
+      <div class="icon">🚶</div>
+      <h3 class="en">Walking Paths</h3><h3 class="es">Senderos</h3>
+      <p class="en">Simple, accessible walking paths to enjoy the space and connect with neighbors.</p>
+      <p class="es">Senderos simples y accesibles para disfrutar del espacio y conectar con vecinos.</p>
+    </div>
+    <div class="vision-card">
+      <div class="icon">🪑</div>
+      <h3 class="en">Seating Areas</h3><h3 class="es">Áreas de Descanso</h3>
+      <p class="en">Benches and gathering spots for conversation and quiet enjoyment.</p>
+      <p class="es">Bancas y lugares de encuentro para conversación y disfrute tranquilo.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <h2>
+    <span class="en">Frequently Asked Questions</span>
+    <span class="es">Preguntas Frecuentes</span>
+  </h2>
+
+  <div class="faq-item">
+    <h3 class="en">Potential property value impact</h3>
+    <h3 class="es">Impacto potencial en el valor de la propiedad</h3>
+    <p class="en">A comprehensive review of 33 studies by Drs. Crompton &amp; Nicholls at Texas A&amp;M found homes near passive parks see a premium of 8–10% on adjacent properties, with measurable effects up to 500–600 feet away. Earlier reviews found premiums up to 20%. The National Association of Realtors (2023) found 79% of buyers rate park proximity as important, with 78% willing to pay more. In the Bay Area — where green space is scarce — the premium tends to be even higher.</p>
+    <p class="es">Una revisión de 33 estudios por los Drs. Crompton y Nicholls de Texas A&amp;M encontró que las casas cerca de parques pasivos ven una prima del 8–10%, con efectos medibles hasta 150–180 metros. Revisiones anteriores encontraron primas de hasta 20%. La Asociación Nacional de Agentes Inmobiliarios (2023) encontró que el 79% de los compradores valoran la proximidad a parques.</p>
+    <p class="citation en">Crompton, J.L. &amp; Nicholls, S. (2019). "Impact on Property Values of Distance to Parks and Open Spaces." Journal of Leisure Research, 51(2), 127–146. Crompton (2001). Journal of Leisure Research, 33(1), 1–31. NAR (2023). "Community and Transportation Preferences Survey."</p>
+    <p class="citation es">Crompton, J.L. &amp; Nicholls, S. (2019). Journal of Leisure Research, 51(2), 127–146. Crompton (2001). Journal of Leisure Research, 33(1), 1–31. NAR (2023).</p>
+  </div>
+
+  <div class="faq-item">
+    <h3 class="en">Will my property taxes go up?</h3>
+    <h3 class="es">¿Subirán mis impuestos de propiedad?</h3>
+    <p class="en">No. Under California's Proposition 13, your property taxes are based on your purchase price, not current market value. Your assessed value can only increase by a maximum of 2% per year, regardless of neighborhood improvements. A nearby park increases what your home is <em>worth</em> on the open market without changing what you <em>pay</em> in taxes — you benefit from the equity gain only when you choose to sell.</p>
+    <p class="es">No. Bajo la Proposición 13 de California, sus impuestos de propiedad se basan en su precio de compra, no en el valor actual de mercado. Su valor tasado solo puede aumentar un máximo del 2% por año, sin importar las mejoras del vecindario. Un parque cercano aumenta el <em>valor</em> de su casa en el mercado sin cambiar lo que <em>paga</em> en impuestos.</p>
+    <p class="citation en">California Constitution, Article XIII A (Proposition 13, 1978). Assessed value increases capped at 2%/year until change of ownership or new construction.</p>
+    <p class="citation es">Constitución de California, Artículo XIII A (Proposición 13, 1978). Incremento del valor tasado limitado a 2%/año.</p>
+  </div>
+
+  <div class="faq-item">
+    <h3 class="en">What about noise?</h3>
+    <h3 class="es">¿Habrá mucho ruido?</h3>
+    <p class="en">This is a passive park — native gardens and walking paths, not a sports court or playground. Acoustic studies show quiet garden interiors register just 41–50 dBA, comparable to a library. For comparison, a basketball or pickleball court can reach 70–80 dBA. Dense vegetation actually <em>reduces</em> perceived noise by absorbing and scattering sound waves. The WHO and EPA both recommend 55 dBA as the outdoor noise limit — a passive park sits well below that threshold, and below typical residential street traffic (60–70 dBA).</p>
+    <p class="es">Este es un parque pasivo — jardines nativos y senderos, no una cancha deportiva ni un área de juegos. Los estudios acústicos muestran que los jardines tranquilos registran solo 41–50 dBA, comparable a una biblioteca. En comparación, una cancha de pickleball puede alcanzar 70–80 dBA. La vegetación densa <em>reduce</em> el ruido percibido al absorber ondas sonoras. La OMS y la EPA recomiendan 55 dBA como límite exterior — un parque pasivo está muy por debajo.</p>
+    <p class="citation en">Kang, J. &amp; Yang, W. (2005). "Soundscape and Sound Preferences in Urban Squares." Journal of Urban Design, 10(1), 61–80. Yang &amp; Kang (2005). Applied Acoustics, 66(2), 211–229. WHO Environmental Noise Guidelines (2018). EPA outdoor max: 55 dBA.</p>
+    <p class="citation es">Kang, J. &amp; Yang, W. (2005). Journal of Urban Design, 10(1), 61–80. Yang &amp; Kang (2005). Applied Acoustics, 66(2). OMS (2018). EPA máximo exterior: 55 dBA.</p>
+  </div>
+
+  <div class="faq-item">
+    <h3 class="en">Who will maintain it?</h3>
+    <h3 class="es">¿Quién le dará mantenimiento?</h3>
+    <p class="en">The project is community-led. Maintenance will be handled by neighborhood volunteers and local advocates, with financial sponsorship to cover professional landscaping needs.</p>
+    <p class="es">El proyecto es liderado por la comunidad. El mantenimiento estará a cargo de voluntarios y defensores locales, con patrocinio financiero para cubrir necesidades profesionales de jardinería.</p>
+  </div>
+
+  <div class="faq-item">
+    <h3 class="en">Will it be safe?</h3>
+    <h3 class="es">¿Será seguro?</h3>
+    <p class="en">Studies consistently show that well-maintained green spaces reduce nuisance activity and illegal dumping. By replacing an unused lot with an active, cared-for community space, we increase natural surveillance — what urban planners call "eyes on the street" — making the block feel safer and more welcoming for everyone.</p>
+    <p class="es">Los estudios muestran consistentemente que los espacios verdes bien mantenidos reducen las actividades molestas y los depósitos ilegales de basura. Al reemplazar un lote sin uso con un espacio comunitario activo y cuidado, aumentamos la vigilancia natural, haciendo que la cuadra sea más segura y acogedora para todos.</p>
+    <p class="citation en">Branas, C.C. et al. (2018). PNAS, 115(12), 2946–2951. South, E.C. et al. (2018). JAMA Network Open, 1(3).</p>
+    <p class="citation es">Branas, C.C. et al. (2018). PNAS, 115(12), 2946–2951. South, E.C. et al. (2018). JAMA Network Open, 1(3).</p>
+  </div>
+
+  <div class="faq-item">
+    <h3 class="en">What will it cost me?</h3>
+    <h3 class="es">¿Cuánto me costará?</h3>
+    <p class="en">Nothing. The project is funded through local business sponsorships and community support. Neighborhood businesses are investing, neighborhood businesses will sponsor this space because a thriving, beautiful block is good for everyone. Your only contribution is your voice and your input.</p>
+    <p class="es">Nada. El proyecto está financiado a través de patrocinios de negocios locales y apoyo comunitario. Los negocios del vecindario están invirtiendo, los negocios del vecindario patrocinarán este espacio porque una cuadra bonita y próspera es buena para todos. Su única contribución es su voz y su opinión.</p>
+  </div>
+</section>
+
+<!-- SAFETY / BENEFITS -->
+<section class="safety-section">
+  <h2>
+    <span class="en">Why This Matters</span>
+    <span class="es">Por Qué Es Importante</span>
+  </h2>
+  <div class="safety-grid">
+    <div class="safety-card">
+      <h3 class="en">Cleaner Streets</h3><h3 class="es">Calles Más Limpias</h3>
+      <p class="en">Active green spaces dramatically reduce illegal dumping and litter. A cared-for space signals community pride and discourages misuse.</p>
+      <p class="es">Los espacios verdes activos reducen drásticamente los depósitos ilegales de basura. Un espacio cuidado señala orgullo comunitario y desalienta el mal uso.</p>
+      <p class="citation en">South, E.C. et al. (2018). "Effect of Greening Vacant Land on Mental Health." JAMA Network Open, 1(3).</p>
+    </div>
+    <div class="safety-card">
+      <h3 class="en">Stronger Community</h3><h3 class="es">Comunidad Más Fuerte</h3>
+      <p class="en">Neighborhoods with shared green spaces report higher levels of social connection and mutual trust among residents.</p>
+      <p class="es">Los vecindarios con espacios verdes compartidos reportan mayores niveles de conexión social y confianza mutua.</p>
+    </div>
+    <div class="safety-card">
+      <h3 class="en">Better Health</h3><h3 class="es">Mejor Salud</h3>
+      <p class="en">Access to nearby green space is linked to lower stress, reduced anxiety, and improved mental health outcomes.</p>
+      <p class="es">El acceso a espacios verdes cercanos está relacionado con menos estrés, menos ansiedad y mejor salud mental.</p>
+      <p class="citation en">South, E.C. et al. (2018). JAMA Network Open — greened lots associated with significant reduction in depression.</p>
+    </div>
+    <div class="safety-card">
+      <h3 class="en">Environmental Impact</h3><h3 class="es">Impacto Ambiental</h3>
+      <p class="en">Native plants reduce water usage, support pollinators, and help manage stormwater runoff naturally.</p>
+      <p class="es">Las plantas nativas reducen el uso de agua, apoyan a los polinizadores y ayudan a manejar el agua de lluvia de forma natural.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2>
+    <span class="en">We Want Your Input</span>
+    <span class="es">Queremos Su Opinión</span>
+  </h2>
+  <p class="en">Before we move forward with the official proposal, we want to hear from <strong>you</strong>. This is a project by the neighborhood, for the neighborhood. What would you like to see? What are your concerns? Want to help?</p>
+  <p class="es">Antes de avanzar con la propuesta oficial, queremos escuchar de <strong>usted</strong>. Este es un proyecto por el vecindario, para el vecindario. ¿Qué le gustaría ver? ¿Cuáles son sus preocupaciones? ¿Quiere ayudar?</p>
+  <p style="margin-top: 20px;">
+    <a href="mailto:corridorpark@gmail.com?subject=Corridor%20Park%20-%20Neighbor%20Input" class="btn">
+      <span class="en">Share Your Thoughts</span>
+      <span class="es">Comparta Su Opinión</span>
+    </a>
+  </p>
+  <p style="font-size: 0.85em; color: var(--gray); margin-top: 16px;">
+    <span class="en">Or come talk to us at the next Sidewalk Chat!</span>
+    <span class="es">¡O venga a hablar con nosotros en la próxima Charla en la Acera!</span>
+  </p>
+</section>
+
+<footer>
+  <p>Corridor Park — A Community-Led Pilot for North Fair Oaks</p>
+  <p style="margin-top: 6px; font-size: 0.8em; opacity: 0.6;">In partnership with San Mateo County and SFPUC</p>
+</footer>
+
+</body>
+</html>
