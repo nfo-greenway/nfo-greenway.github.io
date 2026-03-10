@@ -20,17 +20,28 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; color: var(--text); line-height: 1.6; }
 
-  /* Hero */
+  /* Hero with video background */
   .hero {
-    background: linear-gradient(rgba(27,94,32,0.7), rgba(46,125,50,0.75)), url('park_render.png') center/cover no-repeat;
-    color: white; text-align: center; padding: 80px 20px 60px;
-    position: relative; overflow: hidden;
+    position: relative; overflow: hidden; color: white; text-align: center;
+    padding: 100px 20px 80px; min-height: 70vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
   }
-  .hero h1 { font-family: 'Playfair Display', Georgia, serif; font-size: 3.2em; font-weight: 800; margin-bottom: 10px; position: relative; letter-spacing: -0.5px; }
-  .hero .subtitle { font-size: 1.2em; opacity: 0.9; max-width: 600px; margin: 0 auto 30px; position: relative; }
+  .hero-video {
+    position: absolute; top: 50%; left: 50%;
+    min-width: 100%; min-height: 100%; width: auto; height: auto;
+    transform: translate(-50%, -50%); object-fit: cover; z-index: 0;
+  }
+  .hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(rgba(27,94,32,0.62), rgba(27,94,32,0.68));
+    z-index: 1;
+  }
+  .hero-content { position: relative; z-index: 2; max-width: 700px; }
+  .hero h1 { font-family: 'Playfair Display', Georgia, serif; font-size: 3.4em; font-weight: 800; margin-bottom: 12px; letter-spacing: -0.5px; text-shadow: 0 2px 20px rgba(0,0,0,0.3); }
+  .hero .subtitle { font-size: 1.25em; opacity: 0.93; max-width: 600px; margin: 0 auto 30px; text-shadow: 0 1px 8px rgba(0,0,0,0.2); }
   .hero .badge {
-    display: inline-block; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3);
-    border-radius: 50px; padding: 8px 24px; font-size: 0.9em; position: relative; backdrop-filter: blur(4px);
+    display: inline-block; background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 50px; padding: 8px 24px; font-size: 0.9em; backdrop-filter: blur(4px);
   }
 
   /* Sections */
@@ -76,11 +87,9 @@
   .btn {
     display: inline-block; background: var(--green); color: white; padding: 14px 36px;
     border-radius: 50px; text-decoration: none; font-weight: 600; font-size: 1.05em;
-    transition: background 0.2s;
+    transition: background 0.2s; border: none; cursor: pointer;
   }
   .btn:hover { background: #1B5E20; }
-  .btn.btn-outline { background: transparent; border: 2px solid var(--green); color: var(--green); }
-  .btn.btn-outline:hover { background: var(--green); color: white; }
 
   /* Modal */
   .modal-overlay {
@@ -118,10 +127,6 @@
   .modal .success-msg .check { font-size: 3em; margin-bottom: 10px; }
   .modal .success-msg h3 { color: var(--green); margin-bottom: 8px; }
   .modal .success-msg p { color: var(--gray); font-size: 0.9em; }
-  @media (max-width: 480px) {
-    .modal { padding: 28px 20px; border-radius: 12px; }
-    .modal h3 { font-size: 1.15em; }
-  }
 
   /* Safety */
   .safety-section { background: white; }
@@ -135,24 +140,31 @@
   footer { background: var(--text); color: rgba(255,255,255,0.7); text-align: center; padding: 30px 20px; font-size: 0.85em; }
   footer a { color: rgba(255,255,255,0.9); }
 
-  /* Spanish toggle */
-  .lang-toggle {
-    position: fixed; top: 16px; right: 16px; z-index: 100; background: white; border: 2px solid var(--green);
-    border-radius: 50px; padding: 6px 16px; cursor: pointer; font-weight: 600; color: var(--green);
-    font-size: 0.85em; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  /* Language bar */
+  .lang-bar {
+    position: fixed; top: 14px; right: 14px; z-index: 100;
+    display: flex; border-radius: 50px; overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.12); border: 2px solid var(--green);
   }
-  .lang-toggle:hover { background: var(--green); color: white; }
+  .lang-btn {
+    background: white; border: none; padding: 6px 14px; cursor: pointer;
+    font-weight: 600; color: var(--green); font-size: 0.8em; transition: all 0.2s;
+  }
+  .lang-btn.active { background: var(--green); color: white; }
+  .lang-btn:not(:last-child) { border-right: 1px solid #C8E6C9; }
+  .lang-btn:hover:not(.active) { background: var(--green-pale); }
 
-  .es { display: none; }
+  /* Language visibility */
+  .es, .zh { display: none; }
   body.spanish .en { display: none; }
   body.spanish .es { display: block; }
-  body.spanish .es-inline { display: inline; }
-  body.spanish .en-inline { display: none; }
+  body.chinese .en { display: none; }
+  body.chinese .zh { display: block; }
 
   /* Tablet */
   @media (max-width: 768px) {
-    .hero { padding: 60px 16px 50px; }
-    .hero h1 { font-size: 2.4em; }
+    .hero { padding: 70px 16px 60px; min-height: 55vh; }
+    .hero h1 { font-size: 2.5em; }
     .hero .subtitle { font-size: 1.05em; }
     section { padding: 40px 16px; }
     h2 { font-size: 1.5em; }
@@ -162,11 +174,12 @@
 
   /* Mobile */
   @media (max-width: 480px) {
-    .lang-toggle { top: 10px; right: 10px; padding: 4px 10px; font-size: 0.72em; background: rgba(255,255,255,0.92); box-shadow: 0 1px 6px rgba(0,0,0,0.15); }
-    .hero { padding: 50px 16px 40px; }
-    .hero h1 { font-size: 1.9em; letter-spacing: -0.3px; }
-    .hero .subtitle { font-size: 0.95em; margin-bottom: 20px; }
-    .hero .badge { font-size: 0.78em; padding: 6px 16px; }
+    .lang-bar { top: 10px; right: 10px; }
+    .lang-btn { padding: 4px 10px; font-size: 0.7em; }
+    .hero { padding: 60px 16px 45px; min-height: 50vh; }
+    .hero h1 { font-size: 2em; }
+    .hero .subtitle { font-size: 0.92em; margin-bottom: 20px; }
+    .hero .badge { font-size: 0.76em; padding: 6px 16px; }
     .tagline-strip { padding: 16px 14px; }
     .tagline-strip .headline { font-size: 0.95em; }
     .tagline-strip .detail { font-size: 0.82em; }
@@ -193,28 +206,44 @@
     .cta-section h2 { font-size: 1.3em; }
     .cta-section p { font-size: 0.9em; }
     .btn { padding: 12px 28px; font-size: 0.95em; }
+    .modal { padding: 28px 20px; border-radius: 12px; }
+    .modal h3 { font-size: 1.15em; }
     footer { padding: 20px 14px; font-size: 0.8em; }
   }
 </style>
 </head>
 <body>
 
-<button class="lang-toggle" onclick="document.body.classList.toggle('spanish'); this.textContent = document.body.classList.contains('spanish') ? 'English' : 'Español';">Español</button>
+<!-- Language Bar -->
+<div class="lang-bar">
+  <button class="lang-btn active" onclick="setLang('en')">EN</button>
+  <button class="lang-btn" onclick="setLang('es')">ES</button>
+  <button class="lang-btn" onclick="setLang('zh')">中文</button>
+</div>
 
-<!-- HERO -->
+<!-- HERO with video background -->
 <div class="hero">
-  <h1>
-    <span class="en">Corridor Park</span>
-    <span class="es">Parque del Corredor</span>
-  </h1>
-  <p class="subtitle">
-    <span class="en">A community-led green space for North Fair Oaks</span>
-    <span class="es">Un espacio verde liderado por la comunidad para North Fair Oaks</span>
-  </p>
-  <span class="badge">
-    <span class="en">Community Pilot Project — SFPUC Right-of-Way</span>
-    <span class="es">Proyecto Piloto Comunitario — Derecho de paso de SFPUC</span>
-  </span>
+  <video class="hero-video" autoplay muted loop playsinline>
+    <source src="park_flythrough.mp4" type="video/mp4">
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1>
+      <span class="en">Corridor Park</span>
+      <span class="es">Parque del Corredor</span>
+      <span class="zh">走廊公园</span>
+    </h1>
+    <p class="subtitle">
+      <span class="en">A community-led green space for North Fair Oaks</span>
+      <span class="es">Un espacio verde liderado por la comunidad para North Fair Oaks</span>
+      <span class="zh">北费尔奥克斯社区共建绿地</span>
+    </p>
+    <span class="badge">
+      <span class="en">Community Pilot Project — SFPUC Right-of-Way</span>
+      <span class="es">Proyecto Piloto Comunitario — Derecho de paso de SFPUC</span>
+      <span class="zh">社区试点项目 — SFPUC 通行权用地</span>
+    </span>
+  </div>
 </div>
 
 <!-- TAGLINE STRIP -->
@@ -222,10 +251,12 @@
   <div class="headline">
     <span class="en">Elevating our neighborhood, together.</span>
     <span class="es">Elevando nuestro vecindario, juntos.</span>
+    <span class="zh">携手提升我们的社区。</span>
   </div>
   <div class="detail">
     <span class="en">A vibrant, safe green space—maintained by the community and powered by local partnerships.</span>
     <span class="es">Un espacio verde vibrante y seguro—mantenido por la comunidad e impulsado por alianzas locales.</span>
+    <span class="zh">一个充满活力的安全绿地——由社区维护，本地合作伙伴支持。</span>
   </div>
 </div>
 
@@ -235,6 +266,7 @@
   <p class="map-caption">
     <span class="en">The highlighted corridor between 14th Ave and 18th Ave — currently unused SFPUC right-of-way land.</span>
     <span class="es">El corredor resaltado entre 14th Ave y 18th Ave — actualmente terreno sin uso del derecho de paso de SFPUC.</span>
+    <span class="zh">14街至18街之间的走廊地带（红色标记）——目前未使用的SFPUC通行权用地。</span>
   </p>
 </div>
 
@@ -244,18 +276,8 @@
   <p class="map-caption">
     <span class="en">Conceptual site plan.</span>
     <span class="es">Plano conceptual.</span>
+    <span class="zh">概念规划效果图。</span>
   </p>
-</div>
-
-<!-- FLY-THROUGH -->
-<div style="background: var(--text); padding: 40px 20px; text-align: center;">
-  <p style="color: rgba(255,255,255,0.6); font-size: 0.8em; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 14px;">
-    <span class="en">Virtual Walk-Through</span>
-    <span class="es">Recorrido Virtual</span>
-  </p>
-  <video autoplay muted loop playsinline style="max-width: 900px; width: 100%; border-radius: 12px; box-shadow: 0 8px 40px rgba(0,0,0,0.4);">
-    <source src="park_flythrough.mp4" type="video/mp4">
-  </video>
 </div>
 
 <!-- VISION -->
@@ -263,28 +285,33 @@
   <h2>
     <span class="en">The Vision</span>
     <span class="es">La Visión</span>
+    <span class="zh">愿景</span>
   </h2>
   <p class="en">We are proposing a Community-Led Pilot project to San Mateo County and SFPUC to beautify the corridor behind and near our homes. This is about creating a safer, cleaner, and more welcoming North Fair Oaks through landscaping, native plants, and community stewardship.</p>
   <p class="es">Proponemos un Proyecto Piloto Comunitario al Condado de San Mateo y a la SFPUC para embellecer el corredor detrás y cerca de nuestras casas. Se trata de crear un North Fair Oaks más seguro, limpio y acogedor a través del paisajismo, plantas nativas y la participación comunitaria.</p>
+  <p class="zh">我们正在向圣马特奥县和SFPUC提出社区主导的试点项目，美化我们住宅附近的走廊地带。通过景观美化、种植本地植物和社区管理，打造一个更安全、更清洁、更温馨的北费尔奥克斯。</p>
 
   <div class="vision-grid">
     <div class="vision-card">
       <div class="icon">🌿</div>
-      <h3 class="en">Native Plants</h3><h3 class="es">Plantas Nativas</h3>
+      <h3 class="en">Native Plants</h3><h3 class="es">Plantas Nativas</h3><h3 class="zh">本地植物</h3>
       <p class="en">Drought-tolerant California native gardens with privacy hedges along fence lines for noise buffering.</p>
       <p class="es">Jardines nativos de California tolerantes a la sequía con setos de privacidad a lo largo de las cercas para amortiguar el ruido.</p>
+      <p class="zh">耐旱的加州本地植物花园，沿围栏种植隔音绿篱，保护隐私。</p>
     </div>
     <div class="vision-card">
       <div class="icon">🚶</div>
-      <h3 class="en">Walking Paths</h3><h3 class="es">Senderos</h3>
+      <h3 class="en">Walking Paths</h3><h3 class="es">Senderos</h3><h3 class="zh">步行小径</h3>
       <p class="en">Simple, accessible walking paths to enjoy the space and connect with neighbors.</p>
       <p class="es">Senderos simples y accesibles para disfrutar del espacio y conectar con vecinos.</p>
+      <p class="zh">简洁无障碍的步行小径，让您享受绿地、结识邻居。</p>
     </div>
     <div class="vision-card">
       <div class="icon">🪑</div>
-      <h3 class="en">Seating Areas</h3><h3 class="es">Áreas de Descanso</h3>
+      <h3 class="en">Seating Areas</h3><h3 class="es">Áreas de Descanso</h3><h3 class="zh">休息区</h3>
       <p class="en">Benches and gathering spots for conversation and quiet enjoyment.</p>
       <p class="es">Bancas y lugares de encuentro para conversación y disfrute tranquilo.</p>
+      <p class="zh">设有长椅和聚会区，供交谠休憩之用。</p>
     </div>
   </div>
 </section>
@@ -294,56 +321,73 @@
   <h2>
     <span class="en">Frequently Asked Questions</span>
     <span class="es">Preguntas Frecuentes</span>
+    <span class="zh">常见问题</span>
   </h2>
 
   <div class="faq-item">
     <h3 class="en">Potential property value impact</h3>
     <h3 class="es">Posible impacto en el valor de la propiedad</h3>
+    <h3 class="zh">对房产价值的潜在影响</h3>
     <p class="en">A comprehensive review of 33 studies by Drs. Crompton &amp; Nicholls at Texas A&amp;M found homes near passive parks see a premium of 8–10% on adjacent properties, with measurable effects up to 500–600 feet away. Earlier reviews found premiums up to 20%. The National Association of Realtors (2023) found 79% of buyers rate park proximity as important, with 78% willing to pay more. In the Bay Area — where green space is scarce — the premium tends to be even higher.</p>
     <p class="es">Una revisión de 33 estudios por los Drs. Crompton y Nicholls de Texas A&amp;M encontró que las casas cerca de parques pasivos ven una prima del 8–10%, con efectos medibles hasta 150–180 metros. Revisiones anteriores encontraron primas de hasta 20%. La Asociación Nacional de Agentes Inmobiliarios (2023) encontró que el 79% de los compradores valoran la proximidad a parques.</p>
+    <p class="zh">德州农工大学Crompton和Nicholls博士对33项研究的综合分析发现，被动式公园附近的房屋可增值8-10%，影响范围可达150-180米。早期研究发现增值可高达20%。全美房地产经纪人协会(2023)发现79%的购房者重视公园距离。在绿地稀缺的湾区，增值往往更高。</p>
     <p class="citation en">Crompton, J.L. &amp; Nicholls, S. (2019). "Impact on Property Values of Distance to Parks and Open Spaces." Journal of Leisure Research, 51(2), 127–146. Crompton (2001). Journal of Leisure Research, 33(1), 1–31. NAR (2023). "Community and Transportation Preferences Survey."</p>
     <p class="citation es">Crompton, J.L. &amp; Nicholls, S. (2019). Journal of Leisure Research, 51(2), 127–146. Crompton (2001). Journal of Leisure Research, 33(1), 1–31. NAR (2023).</p>
+    <p class="citation zh">Crompton &amp; Nicholls (2019). Journal of Leisure Research, 51(2), 127–146. NAR (2023).</p>
   </div>
 
   <div class="faq-item">
     <h3 class="en">Will my property taxes go up?</h3>
     <h3 class="es">¿Subirán mis impuestos de propiedad?</h3>
+    <h3 class="zh">我的房产税会增加吗？</h3>
     <p class="en">No. Under California's Proposition 13, your property taxes are based on your purchase price, not current market value. Your assessed value can only increase by a maximum of 2% per year, regardless of neighborhood improvements. A nearby park increases what your home is <em>worth</em> on the open market without changing what you <em>pay</em> in taxes — you benefit from the equity gain only when you choose to sell.</p>
     <p class="es">No. Bajo la Proposición 13 de California, sus impuestos de propiedad se basan en su precio de compra, no en el valor actual de mercado. Su valor tasado solo puede aumentar un máximo del 2% por año, sin importar las mejoras del vecindario. Un parque cercano aumenta el <em>valor</em> de su casa en el mercado sin cambiar lo que <em>paga</em> en impuestos.</p>
+    <p class="zh">不会。根据加州第13号提案，您的房产税基于购买价格，而非当前市场价值。无论社区如何改善，您的评估价值每年最多只能增加2%。附近的公园会提高您房屋的市场<em>价值</em>，但不会改变您<em>缴纳</em>的税款——您只有在选择出售时才会从中受益。</p>
     <p class="citation en">California Constitution, Article XIII A (Proposition 13, 1978). Assessed value increases capped at 2%/year until change of ownership or new construction.</p>
     <p class="citation es">Constitución de California, Artículo XIII A (Proposición 13, 1978). Incremento del valor tasado limitado a 2%/año.</p>
+    <p class="citation zh">加州宪法第XIII A条（第13号提案，1978年）。评估价值每年增幅上限为2%。</p>
   </div>
 
   <div class="faq-item">
     <h3 class="en">What about noise?</h3>
     <h3 class="es">¿Habrá mucho ruido?</h3>
+    <h3 class="zh">噪音问题呢？</h3>
     <p class="en">This is a passive park — native gardens and walking paths, not a sports court or playground. Acoustic studies show quiet garden interiors register just 41–50 dBA, comparable to a library. For comparison, a basketball or pickleball court can reach 70–80 dBA. Dense vegetation actually <em>reduces</em> perceived noise by absorbing and scattering sound waves. The WHO and EPA both recommend 55 dBA as the outdoor noise limit — a passive park sits well below that threshold, and below typical residential street traffic (60–70 dBA).</p>
     <p class="es">Este es un parque pasivo — jardines nativos y senderos, no una cancha deportiva ni un área de juegos. Los estudios acústicos muestran que los jardines tranquilos registran solo 41–50 dBA, comparable a una biblioteca. En comparación, una cancha de pickleball puede alcanzar 70–80 dBA. La vegetación densa <em>reduce</em> el ruido percibido al absorber ondas sonoras. La OMS y la EPA recomiendan 55 dBA como límite exterior — un parque pasivo está muy por debajo.</p>
+    <p class="zh">这是一个被动式公园——本地花园和步行道，不是运动场或游乐场。声学研究表明，安静的花园内部噪音仅为41-50分贝，相当于图书馆水平。相比之下，篮球或匹克球场可达70-80分贝。茂密的植被实际上能通过吸收和散射声波来<em>降低</em>噪音。世卫组织和美国环保署建议室外噪音上限为55分贝——被动式公园远低于此标准。</p>
     <p class="citation en">Kang, J. &amp; Yang, W. (2005). "Soundscape and Sound Preferences in Urban Squares." Journal of Urban Design, 10(1), 61–80. Yang &amp; Kang (2005). Applied Acoustics, 66(2), 211–229. WHO Environmental Noise Guidelines (2018). EPA outdoor max: 55 dBA.</p>
     <p class="citation es">Kang, J. &amp; Yang, W. (2005). Journal of Urban Design, 10(1), 61–80. Yang &amp; Kang (2005). Applied Acoustics, 66(2). OMS (2018). EPA máximo exterior: 55 dBA.</p>
+    <p class="citation zh">Kang &amp; Yang (2005). Journal of Urban Design. WHO (2018). EPA 室外限值: 55 dBA。</p>
   </div>
 
   <div class="faq-item">
     <h3 class="en">Who will maintain it?</h3>
     <h3 class="es">¿Quién le dará mantenimiento?</h3>
+    <h3 class="zh">谁来维护？</h3>
     <p class="en">The project is community-led. Maintenance will be handled by neighborhood volunteers and local advocates, with financial sponsorship to cover professional landscaping needs.</p>
     <p class="es">El proyecto es liderado por la comunidad. El mantenimiento estará a cargo de voluntarios y defensores locales, con patrocinio financiero para cubrir necesidades profesionales de jardinería.</p>
+    <p class="zh">该项目由社区主导。维护工作将由社区志愿者和当地倡导者承担，并有赞助资金用于专业园林维护。</p>
   </div>
 
   <div class="faq-item">
     <h3 class="en">Will it be safe?</h3>
     <h3 class="es">¿Será seguro?</h3>
+    <h3 class="zh">安全吗？</h3>
     <p class="en">Studies consistently show that well-maintained green spaces reduce nuisance activity and illegal dumping. By replacing an unused lot with an active, cared-for community space, we increase natural surveillance — what urban planners call "eyes on the street" — making the block feel safer and more welcoming for everyone.</p>
     <p class="es">Los estudios muestran consistentemente que los espacios verdes bien mantenidos reducen las actividades molestas y los depósitos ilegales de basura. Al reemplazar un lote sin uso con un espacio comunitario activo y cuidado, aumentamos la vigilancia natural, haciendo que la cuadra sea más segura y acogedora para todos.</p>
+    <p class="zh">研究一致表明，维护良好的绿地能减少滋扰活动和非法倾倒。将闲置空地改造为有人照料的社区空间，可以增加自然监控——城市规划师称之为"街道之眼"——让整个街区更安全、更宜居。</p>
     <p class="citation en">Branas, C.C. et al. (2018). PNAS, 115(12), 2946–2951. South, E.C. et al. (2018). JAMA Network Open, 1(3).</p>
     <p class="citation es">Branas, C.C. et al. (2018). PNAS, 115(12), 2946–2951. South, E.C. et al. (2018). JAMA Network Open, 1(3).</p>
+    <p class="citation zh">Branas 等 (2018). PNAS, 115(12). South 等 (2018). JAMA Network Open, 1(3).</p>
   </div>
 
   <div class="faq-item">
     <h3 class="en">What will it cost me?</h3>
     <h3 class="es">¿Cuánto me costará?</h3>
+    <h3 class="zh">我需要花钱吗？</h3>
     <p class="en">Nothing. The project is funded through local business sponsorships and community support. Neighborhood businesses will sponsor this space because a thriving, beautiful block is good for everyone. Your only contribution is your voice and your input.</p>
     <p class="es">Nada. El proyecto está financiado a través de patrocinios de negocios locales y apoyo comunitario. Los negocios del vecindario patrocinarán este espacio porque una cuadra bonita y próspera es buena para todos. Su única contribución es su voz y su opinión.</p>
+    <p class="zh">不需要。该项目通过当地企业赞助和社区支持来资助。社区企业愿意赞助，因为一个美丽繁荣的街区对所有人都有益。您唯一需要贡献的就是您的意见和想法。</p>
   </div>
 </section>
 
@@ -352,29 +396,34 @@
   <h2>
     <span class="en">Why This Matters</span>
     <span class="es">Por Qué Es Importante</span>
+    <span class="zh">为什么这很重要</span>
   </h2>
   <div class="safety-grid">
     <div class="safety-card">
-      <h3 class="en">Cleaner Streets</h3><h3 class="es">Calles Más Limpias</h3>
+      <h3 class="en">Cleaner Streets</h3><h3 class="es">Calles Más Limpias</h3><h3 class="zh">更清洁的街道</h3>
       <p class="en">Active green spaces dramatically reduce illegal dumping and litter. A cared-for space signals community pride and discourages misuse.</p>
       <p class="es">Los espacios verdes activos reducen drásticamente los depósitos ilegales de basura. Un espacio cuidado señala orgullo comunitario y desalienta el mal uso.</p>
+      <p class="zh">活跃的绿地能大幅减少非法倾倒和乱扔垃圾。精心维护的空间彰显社区自豪感，遏制不当使用。</p>
       <p class="citation en">South, E.C. et al. (2018). "Effect of Greening Vacant Land on Mental Health." JAMA Network Open, 1(3).</p>
     </div>
     <div class="safety-card">
-      <h3 class="en">Stronger Community</h3><h3 class="es">Comunidad Más Fuerte</h3>
+      <h3 class="en">Stronger Community</h3><h3 class="es">Comunidad Más Fuerte</h3><h3 class="zh">更强的社区凝聚力</h3>
       <p class="en">Neighborhoods with shared green spaces report higher levels of social connection and mutual trust. A safe, welcoming space where families can gather, kids can explore nature, and neighbors can get to know each other.</p>
       <p class="es">Los vecindarios con espacios verdes compartidos reportan mayores niveles de conexión social y confianza mutua. Un espacio seguro y acogedor donde las familias pueden reunirse, los niños pueden explorar la naturaleza y los vecinos pueden conocerse.</p>
+      <p class="zh">拥有共享绿地的社区报告了更高水平的社会联系和互信。一个安全温馨的空间，家庭可以聚会，孩子可以探索自然，邻居可以相互认识。</p>
     </div>
     <div class="safety-card">
-      <h3 class="en">Better Health</h3><h3 class="es">Mejor Salud</h3>
+      <h3 class="en">Better Health</h3><h3 class="es">Mejor Salud</h3><h3 class="zh">更健康的生活</h3>
       <p class="en">Access to nearby green space is linked to lower stress, reduced anxiety, and improved mental health outcomes.</p>
       <p class="es">El acceso a espacios verdes cercanos está relacionado con menos estrés, menos ansiedad y mejor salud mental.</p>
+      <p class="zh">附近有绿地与减轻压力、缓解焦虑和改善心理健康密切相关。</p>
       <p class="citation en">South, E.C. et al. (2018). JAMA Network Open — greened lots associated with significant reduction in depression.</p>
     </div>
     <div class="safety-card">
-      <h3 class="en">Environmental Impact</h3><h3 class="es">Impacto Ambiental</h3>
+      <h3 class="en">Environmental Impact</h3><h3 class="es">Impacto Ambiental</h3><h3 class="zh">环境效益</h3>
       <p class="en">Native plants reduce water usage, support pollinators, and help manage stormwater runoff naturally.</p>
       <p class="es">Las plantas nativas reducen el uso de agua, apoyan a los polinizadores y ayudan a manejar el agua de lluvia de forma natural.</p>
+      <p class="zh">本地植物减少用水、支持传粉者，并自然地管理雨水径流。</p>
     </div>
   </div>
 </section>
@@ -384,18 +433,22 @@
   <h2>
     <span class="en">We Want Your Input</span>
     <span class="es">Queremos Su Opinión</span>
+    <span class="zh">我们需要您的意见</span>
   </h2>
   <p class="en">We want to hear from <strong>you</strong>. This is a project by the neighborhood, for the neighborhood. What would you like to see? What are your concerns? Want to become a Founding Neighbor?</p>
   <p class="es">Queremos escuchar de <strong>usted</strong>. Este es un proyecto por el vecindario, para el vecindario. ¿Qué le gustaría ver? ¿Cuáles son sus preocupaciones? ¿Quiere ser un Vecino Fundador?</p>
+  <p class="zh">我们希望听到<strong>您</strong>的声音。这是一个由社区发起、为社区服务的项目。您希望看到什么？您有什么顾虑？想成为创始邻居吗？</p>
   <p style="margin-top: 20px;">
     <button class="btn" onclick="document.getElementById('feedbackModal').classList.add('active')">
       <span class="en">Share Your Thoughts</span>
       <span class="es">Comparta Su Opinión</span>
+      <span class="zh">分享您的想法</span>
     </button>
   </p>
   <p style="font-size: 0.85em; color: var(--gray); margin-top: 16px;">
     <span class="en">Or come talk to us at the next Sidewalk Chat!</span>
     <span class="es">¡O venga a hablar con nosotros en la próxima Charla en la Acera!</span>
+    <span class="zh">或者来参加下一次人行道聊天活动！</span>
   </p>
 </section>
 
@@ -407,35 +460,42 @@
       <h3>
         <span class="en">Share Your Thoughts</span>
         <span class="es">Comparta Su Opinión</span>
+        <span class="zh">分享您的想法</span>
       </h3>
       <p class="modal-subtitle">
         <span class="en">Your feedback helps shape this project. All fields except your message are optional.</span>
         <span class="es">Sus comentarios ayudan a dar forma a este proyecto. Todos los campos excepto su mensaje son opcionales.</span>
+        <span class="zh">您的反馈有助于完善此项目。除留言外，所有字段均为选填。</span>
       </p>
       <form id="contactForm" onsubmit="return submitFeedback(event)">
         <label>
           <span class="en">Name <span class="optional">(optional)</span></span>
           <span class="es">Nombre <span class="optional">(opcional)</span></span>
+          <span class="zh">姓名 <span class="optional">（选填）</span></span>
         </label>
-        <input type="text" name="name" placeholder="">
+        <input type="text" name="name">
         <label>
           <span class="en">Email <span class="optional">(optional — if you'd like a response)</span></span>
           <span class="es">Correo <span class="optional">(opcional — si desea una respuesta)</span></span>
+          <span class="zh">邮箱 <span class="optional">（选填——如需回复）</span></span>
         </label>
-        <input type="email" name="email" placeholder="">
+        <input type="email" name="email">
         <label>
           <span class="en">Phone <span class="optional">(optional)</span></span>
           <span class="es">Teléfono <span class="optional">(opcional)</span></span>
+          <span class="zh">电话 <span class="optional">（选填）</span></span>
         </label>
-        <input type="tel" name="phone" placeholder="">
+        <input type="tel" name="phone">
         <label>
           <span class="en">Your thoughts, questions, or concerns *</span>
           <span class="es">Sus pensamientos, preguntas o preocupaciones *</span>
+          <span class="zh">您的想法、问题或顾虑 *</span>
         </label>
         <textarea name="message" required></textarea>
         <button type="submit" class="form-btn" id="submitBtn">
           <span class="en">Send Feedback</span>
           <span class="es">Enviar Comentarios</span>
+          <span class="zh">提交反馈</span>
         </button>
       </form>
     </div>
@@ -444,23 +504,32 @@
       <h3>
         <span class="en">Thank you!</span>
         <span class="es">¡Gracias!</span>
+        <span class="zh">谢谢您！</span>
       </h3>
       <p>
         <span class="en">Your feedback has been received. We appreciate your input in shaping Corridor Park.</span>
         <span class="es">Sus comentarios han sido recibidos. Agradecemos su aporte para dar forma al Parque del Corredor.</span>
+        <span class="zh">您的反馈已收到。感谢您为走廊公园项目提供宝贵意见。</span>
       </p>
     </div>
   </div>
 </div>
 
 <script>
+function setLang(lang) {
+  document.body.classList.remove('spanish', 'chinese');
+  if (lang === 'es') document.body.classList.add('spanish');
+  if (lang === 'zh') document.body.classList.add('chinese');
+  document.querySelectorAll('.lang-btn').forEach(function(b){ b.classList.remove('active'); });
+  event.target.classList.add('active');
+}
+
 function submitFeedback(e) {
   e.preventDefault();
   var f = document.getElementById('contactForm');
   var btn = document.getElementById('submitBtn');
   btn.disabled = true;
-  btn.innerHTML = '<span class="en">Sending...</span><span class="es">Enviando...</span>';
-  // Destination constructed at runtime
+  btn.innerHTML = '<span class="en">Sending...</span><span class="es">Enviando...</span><span class="zh">发送中...</span>';
   var d = [104,97,115,115,97,110,46,108,97,115,104,64,103,109,97,105,108,46,99,111,109];
   var dest = d.map(function(c){return String.fromCharCode(c)}).join('');
   var data = new FormData(f);
@@ -476,7 +545,7 @@ function submitFeedback(e) {
     document.getElementById('feedbackSuccess').style.display = 'block';
   }).catch(function(){
     btn.disabled = false;
-    btn.innerHTML = '<span class="en">Send Feedback</span><span class="es">Enviar Comentarios</span>';
+    btn.innerHTML = '<span class="en">Send Feedback</span><span class="es">Enviar Comentarios</span><span class="zh">提交反馈</span>';
     alert('Something went wrong. Please try again.');
   });
   return false;
