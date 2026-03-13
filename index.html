@@ -30,7 +30,9 @@
     position: absolute; top: 50%; left: 50%;
     min-width: 100%; min-height: 100%; width: auto; height: auto;
     transform: translate(-50%, -50%); object-fit: cover; z-index: 0;
+    transition: opacity 1s ease;
   }
+  .hero-video.fading { opacity: 0; }
   .hero-overlay {
     position: absolute; inset: 0;
     background: linear-gradient(rgba(12,35,16,0.38), rgba(12,35,16,0.46));
@@ -690,6 +692,24 @@
 </div>
 
 <script>
+/* ---- Smooth video loop: fade out near end, fade back in after restart ---- */
+(function(){
+  var vid = document.querySelector('.hero-video');
+  if (!vid) return;
+  var FADE_TIME = 1.0; // seconds before end to start fade
+  vid.addEventListener('timeupdate', function(){
+    if (vid.duration && vid.currentTime > vid.duration - FADE_TIME) {
+      vid.classList.add('fading');
+    }
+  });
+  vid.addEventListener('seeked', function(){
+    // fires after loop restarts (seek back to 0)
+    if (vid.currentTime < 1) {
+      setTimeout(function(){ vid.classList.remove('fading'); }, 50);
+    }
+  });
+})();
+
 /* ---- Vote backend URL (paste your Google Apps Script URL here) ---- */
 var VOTE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz56ZRVowGohn7hnHFEGVP4Y5ikGUs3VqxIejQ_QkJSQH7W0ooWvkJlYxZr9jn5wjzR3A/exec';
 
