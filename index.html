@@ -152,11 +152,13 @@
   }
   .vote-form label { display: block; font-size: 0.85em; font-weight: 600; color: var(--text); margin-bottom: 4px; margin-top: 14px; }
   .vote-form label .optional { font-weight: 400; color: #999; }
-  .vote-form input[type="text"] {
+  .vote-form input[type="text"],
+  .vote-form input[type="email"] {
     width: 100%; padding: 10px 14px; border: 1.5px solid #ddd; border-radius: 8px;
     font-size: 0.95em; font-family: inherit; transition: border-color 0.2s;
   }
-  .vote-form input[type="text"]:focus { outline: none; border-color: var(--green-light); }
+  .vote-form input[type="text"]:focus,
+  .vote-form input[type="email"]:focus { outline: none; border-color: var(--green-light); }
   .vote-question { font-weight: 600; color: var(--text); margin: 24px 0 14px; font-size: 0.95em; text-align: center; }
   .vote-options { display: flex; gap: 12px; justify-content: center; margin-bottom: 24px; }
   .vote-option {
