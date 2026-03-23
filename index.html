@@ -182,6 +182,9 @@
     background: white; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
   .vote-already p { color: var(--gray); font-size: 0.95em; }
 
+  .foba-note { font-size: 0.82em; color: var(--gray); margin-top: -4px; margin-bottom: 12px; line-height: 1.4; }
+  .foba-note a { color: var(--green); font-weight: 600; }
+
   /* Spread the Word Section */
   .spread-section {
     background: var(--green-pale); text-align: center; padding: 50px 20px;
@@ -526,6 +529,18 @@
       </label>
       <input type="text" name="voter_address" required>
 
+      <label>
+        <span class="en">Email <span class="optional">(optional)</span></span>
+        <span class="es">Correo electrónico <span class="optional">(opcional)</span></span>
+        <span class="zh">电子邮件 <span class="optional">（选填）</span></span>
+      </label>
+      <input type="email" name="voter_email" placeholder="your@email.com">
+      <p class="foba-note">
+        <span class="en">Your email may be shared with the <a href="https://www.fobaneighbors.org/" target="_blank" rel="noopener">Fair Oaks Beautification Association (FOBA)</a> to keep you updated on neighborhood projects.</span>
+        <span class="es">Su correo puede ser compartido con la <a href="https://www.fobaneighbors.org/" target="_blank" rel="noopener">Fair Oaks Beautification Association (FOBA)</a> para mantenerlo informado sobre proyectos del vecindario.</span>
+        <span class="zh">您的邮箱可能会与<a href="https://www.fobaneighbors.org/" target="_blank" rel="noopener">Fair Oaks Beautification Association (FOBA)</a>分享，以便让您了解社区项目的最新信息。</span>
+      </p>
+
       <p class="vote-question">
         <span class="en">How do you feel about the Corridor Park project?</span>
         <span class="es">¿Qué opina del proyecto Parque del Corredor?</span>
@@ -574,6 +589,7 @@
       <span class="es">Gracias por hacer oír su voz. Su voto ayuda a moldear el futuro de nuestro vecindario.</span>
       <span class="zh">感谢您发出自己的声音。您的投票有助于塑造社区的未来。</span>
     </p>
+
   </div>
 
   <div id="voteAlready" class="vote-already" style="display:none;">
@@ -727,8 +743,9 @@ function submitVote(e) {
   if (!selectedVote) { alert('Please select a vote option'); return false; }
   var form = document.getElementById('voteForm');
   var btn = document.getElementById('voteBtn');
-  var vName = form.voter_name.value;
-  var vAddr = form.voter_address.value.trim();
+  var vName  = form.voter_name.value;
+  var vAddr  = form.voter_address.value.trim();
+  var vEmail = form.voter_email.value.trim();
   if (!vAddr) { alert('Please enter your street address'); return false; }
 
   btn.disabled = true;
@@ -743,19 +760,20 @@ function submitVote(e) {
     fetch(VOTE_SCRIPT_URL, {
       method:'POST', mode:'no-cors',
       headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ name:vName, address:vAddr, vote:selectedVote })
-    }).then(function(){ voteOk(); }).catch(function(){ voteFallback(dest, vName, vAddr, voteLabels); });
+      body: JSON.stringify({ name:vName, address:vAddr, vote:selectedVote, email:vEmail })
+    }).then(function(){ voteOk(); }).catch(function(){ voteFallback(dest, vName, vAddr, vEmail, voteLabels); });
   } else {
     /* Fallback: formsubmit.co email only */
-    voteFallback(dest, vName, vAddr, voteLabels);
+    voteFallback(dest, vName, vAddr, vEmail, voteLabels);
   }
   return false;
 }
 
-function voteFallback(dest, vName, vAddr, voteLabels) {
+function voteFallback(dest, vName, vAddr, vEmail, voteLabels) {
   var data = new FormData();
   data.append('Name', vName || '(not provided)');
   data.append('Address', vAddr);
+  data.append('Email', vEmail || '(not provided)');
   data.append('Vote', voteLabels[selectedVote]);
   data.append('_subject', '\ud83d\uddf3\ufe0f Corridor Park Vote: ' + voteLabels[selectedVote] + ' \u2014 ' + vAddr);
   data.append('_captcha','false');
